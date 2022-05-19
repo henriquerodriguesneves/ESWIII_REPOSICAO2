@@ -1,27 +1,23 @@
 package view;
 
-import controller.MovimentacaoVeiculosController;
-import model.TipoVeiculo;
-import model.Veiculo;
-import model.VeiculoBuilder;
+import controller.IImposto;
+import controller.ImpostoSaoPaulo;
+import model.Propriedade;
+import model.PropriedadeBuilder;
 
 public class Principal {
-    public static void main(String[] args) {
-        MovimentacaoVeiculosController mvc = new MovimentacaoVeiculosController();
+  public static void main(String[] args) {
+    Propriedade propriedade = PropriedadeBuilder.builder()
+        .addAreaTotal(10000)
+        .addNumeroComodos(5)
+        .get();
 
-        Veiculo caminhao = VeiculoBuilder.builder()
-                .addVeiculo(
-                        TipoVeiculo.CAMINHAO,
-                        "LCM0001",
-                        "SCANIA",
-                        "R450",
-                        "Azul",
-                        160)
-                .addEixos(9)
-                .addCargaMaxima(13600)
-                .get();
+    IImposto impostoStrategy = new ImpostoSaoPaulo();
+    // IImposto impostoStrategy = new ImpostoBeloHorizonte();
+    // IImposto impostoStrategy = new ImpostoCuritiba();
+    // IImposto impostoStrategy = new ImpostoPortoAlegre();
 
-        mvc.inicioMovimentacao(caminhao);
-        mvc.movimentacaoVeiculo();
-    }
+    System.out.println(impostoStrategy.calcularImposto(propriedade));
+
+  }
 }
